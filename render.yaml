@@ -43,7 +43,7 @@ services:
     startCommand: npm start
     envVars:
       - key: NEXT_PUBLIC_API_URL
-        value: https://women-safety-backend.onrender.com/api
+        value: https://women-safety-backend-74zl.onrender.com/api
 
 # ----------------------------------------------------
 # Managed PostgreSQL Database
