@@ -38,7 +38,8 @@ def trigger_sos(
     
     # Notify Trusted Contacts
     contacts = db.query(TrustedContact).filter(TrustedContact.user_id == current_user.id).all()
-    tracking_link = f"http://localhost:3000/guardian?userId={current_user.id}"
+    base_url = settings.FRONTEND_URL.rstrip("/")
+    tracking_link = f"{base_url}/guardian?userId={current_user.id}"
     
     message_body = (
         f"CRITICAL: {current_user.name} has triggered an SOS alert! "
@@ -148,7 +149,8 @@ def evaluate_realtime_risk(
             
             # Notify contacts
             contacts = db.query(TrustedContact).filter(TrustedContact.user_id == current_user.id).all()
-            tracking_link = f"http://localhost:3000/guardian?userId={current_user.id}"
+            base_url = settings.FRONTEND_URL.rstrip("/")
+            tracking_link = f"{base_url}/guardian?userId={current_user.id}"
             message = (
                 f"ALERT: AI Safety Risk Engine has detected HIGH risk for {current_user.name}!\n"
                 f"Factors: {', '.join(res['risk_factors'])}\n"

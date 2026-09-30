@@ -1,0 +1,55 @@
+services:
+  # ----------------------------------------------------
+  # Backend API (FastAPI)
+  # ----------------------------------------------------
+  - type: web
+    name: women-safety-backend
+    env: python
+    rootDir: backend
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: women-safety-db
+          property: connectionString
+      - key: FRONTEND_URL
+        value: https://women-safety-frontend.onrender.com
+      - key: ALLOWED_ORIGINS
+        value: https://women-safety-frontend.onrender.com,http://localhost:3000
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: TWILIO_ACCOUNT_SID
+        sync: false
+      - key: TWILIO_AUTH_TOKEN
+        sync: false
+      - key: TWILIO_PHONE_NUMBER
+        sync: false
+      - key: GOOGLE_MAPS_API_KEY
+        sync: false
+
+  # ----------------------------------------------------
+  # Frontend Application (Next.js)
+  # ----------------------------------------------------
+  - type: web
+    name: women-safety-frontend
+    env: node
+    rootDir: frontend
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        value: https://women-safety-backend.onrender.com/api
+
+# ----------------------------------------------------
+# Managed PostgreSQL Database
+# ----------------------------------------------------
+databases:
+  - name: women-safety-db
+    plan: free
+    databaseName: women_safety
+    user: safety_user

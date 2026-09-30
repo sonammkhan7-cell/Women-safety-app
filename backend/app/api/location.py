@@ -93,7 +93,6 @@ def delete_contact(
 def get_tracking_link(
     current_user: User = Depends(get_current_user)
 ):
-    # In production, this points to the hosted web application URL
-    base_url = "http://localhost:3000"
+    base_url = settings.FRONTEND_URL.rstrip("/")
     tracking_url = f"{base_url}/guardian?userId={current_user.id}"
     return {"tracking_url": tracking_url}

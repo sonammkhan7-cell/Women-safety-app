@@ -6,6 +6,8 @@ class Settings(BaseSettings):
     SECRET_KEY: str = os.getenv("SECRET_KEY", "super-secret-default-key-for-women-safety-guardian-2026")
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # 1 week
     DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./women_safety.db")
+    FRONTEND_URL: str = os.getenv("FRONTEND_URL", "http://localhost:3000")
+    ALLOWED_ORIGINS: str = os.getenv("ALLOWED_ORIGINS", "*")
     
     # API Keys (optional; mocked if empty)
     GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
